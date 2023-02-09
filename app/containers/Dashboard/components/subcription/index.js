@@ -1,5 +1,6 @@
 import React from 'react';
 import ReactEcharts from 'echarts-for-react';
+import LayoutDashboard from '../Layout';
 
 const Subscription = () => {
   const option = {
@@ -53,9 +54,9 @@ const Subscription = () => {
     ],
   };
   return (
-    <div>
+    <LayoutDashboard>
       <ReactEcharts option={option} />
-    </div>
+    </LayoutDashboard>
   );
 };
 

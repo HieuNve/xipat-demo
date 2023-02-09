@@ -1,5 +1,6 @@
 import React from 'react';
 import ReactEcharts from 'echarts-for-react';
+import LayoutDashboard from '../Layout';
 
 const Revenue = () => {
   const options = {
@@ -49,9 +50,9 @@ const Revenue = () => {
   };
 
   return (
-    <div>
+    <LayoutDashboard>
       <ReactEcharts option={options} />
-    </div>
+    </LayoutDashboard>
   );
 };
 
