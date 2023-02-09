@@ -8,5 +8,28 @@ export const COOKIES = {
 
 export const REDUX_KEY = {
   app: 'app',
-  login: 'login'
+  login: 'login',
+};
+
+export const APP_ROUTER = {
+  dashboard: {
+    path: '/dashboard',
+    key: '1',
+  },
+  postManagement: {
+    path: '/post-managements',
+    key: '2',
+  },
+  settings: {
+    path: '/settings',
+    key: '3',
+  },
+  subscription: {
+    path: '/dashboard/subscription',
+    key: '4',
+  },
+  revenue: {
+    path: '/dashboard/revenue',
+    key: '5',
+  },
 };

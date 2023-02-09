@@ -5,6 +5,7 @@ node_modules
 stats.json
 package-lock.json
 build.zip
+.vscode
 
 # Cruft
 .DS_Store
