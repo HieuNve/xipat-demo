@@ -2,8 +2,6 @@ import axios from 'axios';
 import Cookies from 'js-cookie';
 import { COOKIES } from './constants';
 import { handleError } from './handleError';
-import { MOCK_DATA_GET } from '../mockData/mockDataGet';
-import { MOCK_DATA_POST } from '../mockData/mockDataPost';
 
 /**
  * Checks if a network request came back fine, and throws an error if not
@@ -26,8 +24,8 @@ const instance = axios.create({
   baseURL: `${
     process.env.NODE_ENV === 'production'
       ? window.SystemConfig.URL
-      : 'https://reqres.in/api'
-  }/Api`,
+      : 'https://jsonplaceholder.typicode.com/'
+  }/`,
 });
 
 instance.defaults.timeout = 25000;
@@ -56,10 +54,8 @@ instance.interceptors.response.use(
 );
 
 export async function axiosGet(path, body) {
-  if (MOCK_DATA_GET[path] && MOCK_DATA_GET[path].switch)
-    return MOCK_DATA_GET[path];
   const res = await instance
-    .post(path, body)
+    .get(path, body)
     .then(checkStatus)
     .catch(error => {
       if (!JSON.parse(JSON.stringify(error)).response) throw error;
@@ -68,8 +64,6 @@ export async function axiosGet(path, body) {
 }
 
 export async function axiosPost(path, body) {
-  if (MOCK_DATA_POST[path] && MOCK_DATA_POST[path].switch)
-    return MOCK_DATA_POST[path];
   const res = await instance
     .post(path, body)
     .then(checkStatus)

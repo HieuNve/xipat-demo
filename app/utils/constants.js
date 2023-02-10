@@ -9,6 +9,7 @@ export const COOKIES = {
 export const REDUX_KEY = {
   app: 'app',
   login: 'login',
+  postManagement: 'postManagement',
 };
 
 export const APP_ROUTER = {

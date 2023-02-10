@@ -9,9 +9,6 @@ const InputColor = () => {
   const handleChange = color => {
     setColorSelected(color.color);
     console.log(color);
-    // if (onChange) {
-    //   onChange(color);
-    // }
   };
 
   const overlay = (
