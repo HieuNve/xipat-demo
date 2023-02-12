@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { Select } from 'antd';
+import { Form, Select } from 'antd';
 
 export const Containner = styled.div`
   display: flex;
@@ -51,4 +51,17 @@ export const ButtonCustom = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
+
+  :hover {
+    box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2), 0 2px 6px 0 rgba(0, 0, 0, 0.19);
+  }
+`;
+
+export const FormItemStyle = styled(Form.Item)`
+  width: 100%;
+  margin-bottom: 0;
+`;
+
+export const FormStyle = styled(Form)`
+  width: 100%;
 `;

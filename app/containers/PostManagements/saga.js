@@ -3,9 +3,9 @@ import { axiosGet } from 'utils/request';
 import * as actions from './actions';
 import * as constants from './constants';
 
-export function* getListUser() {
+export function* getListUser(action) {
   yield put(actions.requestBegin());
-  const path = '/posts';
+  const path = `/posts${action.body}`;
 
   try {
     const res = yield call(axiosGet, path);
@@ -17,7 +17,7 @@ export function* getListUser() {
 
 export function* getInformationUser(action) {
   yield put(actions.requestBegin());
-  const path = `/posts?id=${action.body}`;
+  const path = `/posts/${action.body}`;
 
   try {
     const res = yield call(axiosGet, path);

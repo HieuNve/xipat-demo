@@ -1,18 +1,30 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Layout, Menu } from 'antd';
 import { MenuFoldOutlined, MenuUnfoldOutlined } from '@ant-design/icons';
 import PropTypes from 'prop-types';
+import { useMeasure } from 'react-use';
 import { Container, ContentPage, HeaderPage, SiderMenu } from './style';
 
 const LayoutPage = ({ children, menu, defaultSelectedKeys, onClickMenu }) => {
   const [collapsed, setCollapsed] = useState(false);
 
   const onClickCollapsed = () => {
+    localStorage.setItem('showMenu', collapsed);
     setCollapsed(!collapsed);
   };
 
+  const [ref, { width }] = useMeasure();
+
+  useEffect(() => {
+    if (width < 760) {
+      setCollapsed(true);
+    } else {
+      setCollapsed(false);
+    }
+  }, [width]);
+
   return (
-    <Container>
+    <Container ref={ref}>
       <SiderMenu trigger={null} collapsed={collapsed} collapsible>
         <Menu
           theme="light"

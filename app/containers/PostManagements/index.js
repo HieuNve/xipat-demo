@@ -1,5 +1,14 @@
 import React, { useEffect, useState } from 'react';
-import { Col, Input, Pagination, Row, Table } from 'antd';
+import {
+  Button,
+  Col,
+  Form,
+  Input,
+  Pagination,
+  Row,
+  Table,
+  Tooltip,
+} from 'antd';
 import { useMeasure } from 'react-use';
 import { useInjectReducer } from 'utils/injectReducer';
 import { useInjectSaga } from 'utils/injectSaga';
@@ -10,11 +19,13 @@ import {
   ContainerInputSearch,
   ContainerPagination,
   Containner,
+  FormItemStyle,
+  FormStyle,
   Icon,
   OptionPageSie,
   SelectPageSie,
 } from './style';
-import iconExcel from '../../images/icon/icon-excel.svg';
+import iconExcel from '../../images/icon/icon-search.svg';
 import iconPrint from '../../images/icon/icon-print.svg';
 import { REDUX_KEY } from '../../utils/constants';
 import reducer from './reducer';
@@ -30,6 +41,7 @@ const PostManagements = () => {
   useInjectReducer({ key, reducer });
   useInjectSaga({ key, saga });
   const dispatch = useDispatch();
+  const [form] = Form.useForm();
 
   const [page, setPage] = useState(1);
   const [size, setPageSize] = useState(50);
@@ -58,7 +70,7 @@ const PostManagements = () => {
   }, [totalRecord]);
 
   useEffect(() => {
-    dispatch(actions.getListUser({}));
+    dispatch(actions.getListUser(''));
     return () => {
       dispatch(actions.resetRedux());
     };
@@ -69,23 +81,17 @@ const PostManagements = () => {
       title: 'ID',
       dataIndex: 'id',
       width: '10%',
-      showOnResponse: true,
-      showOnDesktop: true,
     },
     {
       title: 'User ID',
       dataIndex: 'userId',
       width: '10%',
-      showOnResponse: true,
-      showOnDesktop: true,
     },
     {
       title: 'Title',
       dataIndex: 'title',
       width: '50%',
       render: text => <div>{text}</div>,
-      showOnResponse: true,
-      showOnDesktop: true,
     },
     {
       title: 'Action',
@@ -108,13 +114,28 @@ const PostManagements = () => {
     console.log(pageSize, current);
   };
 
+  const onClickSearch = () => {
+    const keySearch = form.getFieldValue('keySearch');
+
+    if (keySearch) {
+      // eslint-disable-next-line no-restricted-globals
+      if (!isNaN(keySearch)) {
+        dispatch(actions.getListUser(`?userId=${keySearch}`));
+      } else {
+        dispatch(actions.getListUser(`?title=${keySearch}`));
+      }
+    } else {
+      dispatch(actions.getListUser(``));
+    }
+  };
+
   const [ref, { height }] = useMeasure();
 
   return (
     <Containner ref={ref}>
       <span>Users Management</span>
       <Row>
-        <Col span={12}>
+        <Col sm={24} md={24} lg={12} xl={12} xxl={12}>
           <ContainerPagination pagination>
             <SelectPageSie
               value={size}
@@ -143,11 +164,25 @@ const PostManagements = () => {
             />
           </ContainerPagination>
         </Col>
-        <Col span={12}>
+        <Col sm={24} md={24} lg={12} xl={12} xxl={12}>
           <ContainerInputSearch>
-            <Input placeholder="Filter in records..." />
-            <ButtonCustom>
-              <Icon src={iconExcel} alt="" />
+            <FormStyle form={form} onFinish={onClickSearch}>
+              <FormItemStyle name="keySearch">
+                <Input placeholder="Filter in records..." />
+              </FormItemStyle>
+              <Button
+                style={{ display: 'none' }}
+                type="primary"
+                htmlType="submit"
+              >
+                Submit
+              </Button>
+            </FormStyle>
+
+            <ButtonCustom onClick={onClickSearch}>
+              <Tooltip title="Search">
+                <Icon src={iconExcel} alt="" />
+              </Tooltip>
             </ButtonCustom>
             <ButtonCustom>
               <Icon src={iconPrint} alt="" />
@@ -159,9 +194,11 @@ const PostManagements = () => {
       <Table
         columns={columns}
         dataSource={listUser}
-        pagination={false}
+        pagination={{
+          current: page,
+          pageSize: size,
+        }}
         scroll={{ x: 1300, y: height - 110 }}
-        mobileBreakPoint={768}
         loading={isLoading}
       />
 

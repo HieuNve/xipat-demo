@@ -15,4 +15,8 @@ export const ButtonCustom = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
+
+  :hover {
+    box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2), 0 2px 6px 0 rgba(0, 0, 0, 0.19);
+  }
 `;

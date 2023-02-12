@@ -29,7 +29,7 @@ export function selectTotalRecord() {
 export function selectInformationUser() {
   return createSelector(
     selectPostManagement,
-    state => (state.informationUser.length > 0 ? state.informationUser[0] : []),
+    state => state.informationUser,
   );
 }
 

@@ -51,6 +51,7 @@ export default function App() {
     ];
 
     const onClickMenu = itemMenu => {
+      localStorage.setItem('menu', itemMenu);
       // eslint-disable-next-line default-case
       switch (itemMenu) {
         case APP_ROUTER.dashboard.key:
@@ -72,7 +73,7 @@ export default function App() {
         render={() => (
           <LayoutPage
             menu={menu}
-            defaultSelectedKeys={['1']}
+            defaultSelectedKeys={[localStorage.getItem('menu')] || ['1']}
             onClickMenu={onClickMenu}
           >
             <Component />
